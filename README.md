@@ -15,7 +15,7 @@ Capture group 2 will be wrapped with html spans of the defined class. It is reco
 Usage example:
 
 ```
-include_once 'include/highlight/highlight.php';
+include_once 'include/php-highlite/highlite.php';
 $text_to_highlight = '$data=$stmt->fetch(PDO::FETCH_ASSOC);';
 echo(SyntaxHighlight($text_to_highlight, "php"));
 ```
