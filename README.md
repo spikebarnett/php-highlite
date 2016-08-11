@@ -11,3 +11,11 @@ Something like the following should do.
 `(.*?)($search_pattern)(.*)`
 
 Capture group 2 will be wrapped with html spans of the defined class. It is recommended that comments, strings, and preproccessor directives be defined above other patterns. Language definitions are located in the lang directory.
+
+Usage example:
+
+```
+include_once 'include/highlight/highlight.php';
+$text_to_highlight = '$data=$stmt->fetch(PDO::FETCH_ASSOC);';
+echo(SyntaxHighlight($text_to_highlight, "php"));
+```
