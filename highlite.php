@@ -13,16 +13,8 @@ function SyntaxHighlight($code, string $lang, int $depth=0) {
 	return SyntaxHighlight($match[1],$lang,$depth+1).'<span class="'.$highlight_regex[$lang][$depth][0].'">'.$match[2].'</span>'.SyntaxHighlight($match[3],$lang,$depth);
 }
 
-function SyntaxHighlight_MarkDownFreindly($s) {
-   $highlight_regex_code_match='#```(.+\n)((?:.*?\n?)+)```#';
-   preg_match($highlight_regex_code_match,$s,$result);
-   while(!empty($result)) {
-      $replacement=$result[0];
-      $replacement=str_replace($result[2],SyntaxHighlight($result[2],trim($result[1])),$replacement);
-      $replacement=str_replace("```","\n~~~",$replacement);
-      $replacement=$replacement."\n";
-      $s=str_replace($result[0],$replacement."\n",$s);
-      preg_match($highlight_regex_code_match,$s,$result);
-   }
-   return $s;
+function SyntaxHighlight_MarkDownFreindly($code) {
+	preg_match('/(.*?```(\w+))\W*(.*?)(```.*)/s',$code,$match);
+	if($match == NULL) return $code;
+	return $match[1]."\n".SyntaxHighlight($match[3],$match[2])."\n".SyntaxHighlight_MarkDownFreindly($match[4]);
 }
