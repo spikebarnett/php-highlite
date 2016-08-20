@@ -1,33 +1,16 @@
 <?php
-include_once realpath(dirname(__FILE__))."/doublelinkedlist.php";
 $highlight_regex=array();
 foreach (glob(realpath(dirname(__FILE__))."/lang/*.php") as $filename) { include $filename; }
 
-class hl_node {
-	var $ignr;
-	var $text;
-	
-	function __construct($text, $ignr) { $this->text = $text; $this->ignr = $ignr; }
-}
-
-function SyntaxHighlight(string $code, string $lang) {
+function SyntaxHighlight($code, string $lang, int $depth=0) {
+	if($code == NULL) return NULL;
+	if($code == '') return NULL;
 	global $highlight_regex;
-	$hl_list = new DoublyLinkedList();
-	$hl_list->insertTail(new hl_node($code,FALSE));
-	foreach($highlight_regex[$lang] as list($class, $pattern)) {
-		for($hl_list->movetoHead(); $hl_list->valid();$hl_list->next()) {
-			if($hl_list->curr()->{'data'}->{'ignr'}) continue;
-			preg_match($pattern,$hl_list->curr()->{'data'}->{'text'},$mtch);
-			if($mtch == NULL) continue;
-			$hl_list->insertAfter(new hl_node($mtch[3],FALSE));
-			$hl_list->insertAfter(new hl_node('<span class="'.$class.'">'.$mtch[2]."</span>",TRUE ));
-			$hl_list->insertAfter(new hl_node($mtch[1],FALSE));
-			$hl_list->deleteNode();
-		}
-	}
-	$retval = "";
-	for($hl_list->movetoHead(); $hl_list->valid();$hl_list->next()) $retval=$retval.$hl_list->curr()->{'data'}->{'text'};
-	return $retval;
+	$max_depth=count($highlight_regex[$lang]);
+	if($depth == $max_depth - 1) return $code;
+	preg_match($highlight_regex[$lang][$depth][1],$code,$match);
+	if($match==NULL) return SyntaxHighlight($code,$lang,$depth+1);
+	return SyntaxHighlight($match[1],$lang,$depth+1).'<span class="'.$highlight_regex[$lang][$depth][0].'">'.$match[2].'</span>'.SyntaxHighlight($match[3],$lang,$depth);
 }
 
 function SyntaxHighlight_MarkDownFreindly($s) {
