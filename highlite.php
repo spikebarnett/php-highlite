@@ -14,7 +14,7 @@ function SyntaxHighlight($code, string $lang, int $depth=0) {
 }
 
 function SyntaxHighlight_MarkDownFreindly($code) {
-	preg_match('/(.*?```(\w+))(\n.*?\n)(```.*)/s',$code,$match);
+	preg_match('/(.*?```((?:\w|-)+))(\n.*?\n)(```.*)/s',$code,$match);
 	if($match == NULL) return $code;
 	return $match[1]."\n".SyntaxHighlight($match[3],$match[2])."\n".SyntaxHighlight_MarkDownFreindly($match[4]);
 }
