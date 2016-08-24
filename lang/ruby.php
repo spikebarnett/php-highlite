@@ -1,6 +1,6 @@
 <?php
 $highlight_regex["ruby"] = [
-['code-preproc',  '/(.*?)(#!.*?\n)(.*)/s'],
+['code-preproc',  '/(.*?)(^#!.*?$)(.*)/sm'],
 ['code-comment',  '/(.*?)(#.*?\n)(.*)/s'],
 ['code-comment',  '/(.*?)(^=begin$.*?^=end$)(.*)/sm'],
 ['code-string',   '/(.*?)("(?:[^"\\\\]+|\\\\.)*"|\'(?:[^\\\'\\\\]+|\\\\.)*\\\')(.*)/s'],
