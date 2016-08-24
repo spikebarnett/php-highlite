@@ -21,6 +21,6 @@ $text_to_highlight = '$data=$stmt->fetch(PDO::FETCH_ASSOC);';
 echo(SyntaxHighlight($text_to_highlight, "php"));
 ```
 
-There is also a SyntaxHighlight_MarkDownFreindly function which will look for the standard grave triplet. Text within a pair of graves triplets will be highlighted using the language specified immediately after the first graves triplet. For example "\```bash" would start a code block to be highlighted using the bash language definition, and "\```" would end it.
+There is also a SyntaxHighlight_MarkDownFreindly function which will look for the standard grave triplet. Text within a pair of graves triplets will be highlighted using the language specified immediately after the first graves triplet. For example "\`\`\`bash" would start a code block to be highlighted using the bash language definition, and "\`\`\`" would end it.
 
 Tilde triplets have been left out intentionally to allow for pre blocks that the SyntaxHighlight_MarkDownFreindly function will not attempt to highlight.
