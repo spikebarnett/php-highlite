@@ -15,7 +15,8 @@ function SyntaxHighlight($code, string $lang, int $depth=0) {
 
 function SyntaxHighlight_MarkDownFreindly($code) {
 	$code=str_replace("\r\n","\n",$code);
-	preg_match('/(.*?```((?:\w|-)+))(\n.*?\n)(```.*)/s',$code,$match);
+	preg_match('/(.*?^```([-a-z]+$))(.*?)(^```$.*)/sm',$code,$match);
+
 	if($match == NULL) return $code;
-	return $match[1]."\n".SyntaxHighlight($match[3],$match[2])."\n".SyntaxHighlight_MarkDownFreindly($match[4]);
+	return $match[1].SyntaxHighlight($match[3],$match[2]).SyntaxHighlight_MarkDownFreindly($match[4]);
 }
